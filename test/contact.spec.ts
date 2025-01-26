@@ -189,4 +189,23 @@ let app: INestApplication<App>;
       expect(response.body.data).toBe(true)
     })
   })
+
+  describe('GET /api/contacts', () => {
+    beforeEach(async () => {
+      await testService.deleteContact()
+      await testService.deleteUser()
+      await testService.createUser()
+      await testService.createContact()
+    })
+
+
+    it('should be able to search contact', async () => {
+      const response = await request(app.getHttpServer()).get(`/api/contacts`).set('Authorization', 'test')
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(200)
+      expect(response.body.data.length).toBe(1)
+    })
+  })
 });

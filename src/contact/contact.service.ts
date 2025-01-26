@@ -91,7 +91,7 @@ export class ContactService {
     async search(user: User, request: SearchContactRequest): Promise<WebResponse<ContactResponse[]>> {
         const searchRequest: SearchContactRequest = this.validationService.validate(ContactValidation.SEARCH, request)
 
-        const filters: string[] = []
+        const filters: Prisma.ContactWhereInput[] = []
 
         if (searchRequest.name) {
             filters.push({
@@ -102,10 +102,14 @@ export class ContactService {
             })
         }
         if (searchRequest.email) {
-
+            filters.push({
+                email: {contains: searchRequest.email}
+            })
         }
         if (searchRequest.phone) {
-
+            filters.push({
+                phone: {contains: searchRequest.phone}
+            })
         }
 
         const skip = (searchRequest.page - 1) * searchRequest.size
@@ -118,5 +122,21 @@ export class ContactService {
             take: searchRequest.size,
             skip: skip
         })
+
+        const total = await this.prismaService.contact.count({
+            where: {
+                username: user.username,
+                AND: filters
+            }
+        })
+
+        return {
+            data: contacts.map(c => this.toContactResponse(c)),
+            paging: {
+                current_page: searchRequest.page,
+                size: searchRequest.size,
+                total_page: Math.ceil(total / searchRequest.size)
+            }
+        }
     }
 }

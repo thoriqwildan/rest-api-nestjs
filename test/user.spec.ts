@@ -9,7 +9,7 @@ import { TestService } from './test.service';
 import { TestModule } from './test.module';
 
 describe('User Controller', () => {
-  let app: INestApplication<App>;
+let app: INestApplication<App>;
   let logger: Logger
   let testService: TestService
 
@@ -72,4 +72,36 @@ describe('User Controller', () => {
     })
   })
 
+  describe('POST /api/users/login', () => {
+    beforeEach(async () => {
+      await testService.deleteUser()
+      await testService.createUser()
+    })
+
+    it('should be rejected if request is invalid', async () => {
+      const response = await request(app.getHttpServer()).post('/api/users/login').send({
+        username: '',
+        password: ''
+      })
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(400)
+      expect(response.body.errors).toBeDefined() 
+    })
+
+    it('should be able to login', async () => {
+      const response = await request(app.getHttpServer()).post('/api/users/login').send({
+        username: 'test',
+        password: 'test'
+      })
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(200)
+      expect(response.body.data.username).toBe('test') 
+      expect(response.body.data.name).toBe('test')
+      expect(response.body.data.token).toBeDefined()
+    })
+  })
 });

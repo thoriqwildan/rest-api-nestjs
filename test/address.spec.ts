@@ -25,7 +25,7 @@ let app: INestApplication<App>;
     testService = app.get(TestService)
   });
 
-  // Create Contact
+  // Create Address
   describe('POST /api/contacts/:contactId/addresses', () => {
     beforeEach(async () => {
       await testService.deleteAddress()
@@ -61,6 +61,57 @@ let app: INestApplication<App>;
         country: 'negara test',
         postal_code: '11111'
       })
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(200)
+      expect(response.body.data.id).toBeDefined() 
+      expect(response.body.data.street).toBe('jalan test')
+      expect(response.body.data.city).toBe('kota test')
+      expect(response.body.data.province).toBe('provinsi test')
+      expect(response.body.data.country).toBe('negara test')
+      expect(response.body.data.postal_code).toBe('11111')
+    })
+  })
+
+  // Get Address
+  describe('GET /api/contacts/:contactId/addresses/:addressId', () => {
+    beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
+      await testService.deleteUser()
+
+      await testService.createUser()
+      await testService.createContact()
+      await testService.createAddress()
+    })
+
+    it('should be rejected if contact is not found', async () => {
+        const contact = await testService.getContact()
+        const address = await testService.getAddress()
+      const response = await request(app.getHttpServer()).get(`/api/contacts/${contact?.id! + 1}/addresses/${address?.id}`).set('Authorization', 'test')
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(404)
+      expect(response.body.errors).toBeDefined() 
+    })
+
+    it('should be rejected if address is not found', async () => {
+        const contact = await testService.getContact()
+        const address = await testService.getAddress()
+      const response = await request(app.getHttpServer()).get(`/api/contacts/${contact?.id}/addresses/${address?.id! + 1}`).set('Authorization', 'test')
+
+      logger.info(response.body)
+
+      expect(response.status).toBe(404)
+      expect(response.body.errors).toBeDefined() 
+    })
+
+    it('should be able to get address', async () => {
+      const contact = await testService.getContact()
+      const address = await testService.getAddress()
+      const response = await request(app.getHttpServer()).get(`/api/contacts/${contact?.id}/addresses/${address?.id}`).set('Authorization', 'test')
 
       logger.info(response.body)
 

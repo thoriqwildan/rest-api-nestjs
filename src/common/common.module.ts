@@ -12,8 +12,9 @@ import { AuthMiddleware } from './auth.middleware';
 @Module({
     imports: [
         WinstonModule.forRoot({
+            level: 'debug',
             format: winston.format.json(),
-            transports: [new winston.transports.Console()]
+            transports: [new winston.transports.Console({level: 'debug'})]
         }),
         ConfigModule.forRoot({
             isGlobal: true

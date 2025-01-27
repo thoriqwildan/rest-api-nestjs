@@ -17,6 +17,7 @@ export class ContactService {
     ) {}
 
     async create(user: User, @Body() request: CreateContactRequest): Promise<ContactResponse> {
+        this.logger.debug(`ContactService.create(${user}, ${request})`)
         const createRequest: CreateContactRequest = this.validationService.validate(ContactValidation.CREATE, request)
 
         const contact = await this.prismaService.contact.create({

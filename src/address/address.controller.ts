@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { AddressService } from "./address.service";
 import { WebResponse } from "src/model/web.model";
 import { AddressResponse, CreateAddressRequest, GetAddressRequest, UpdateAddressRequest } from "src/model/address.model";
@@ -61,4 +61,17 @@ export class AddressController {
         }
     }
 
+    @Delete('/:addressId')
+    @HttpCode(200)
+    async remove(
+        @Auth() user: User,
+        @Param('contactId', ParseIntPipe) contactId: number,
+        @Param('addressId', ParseIntPipe) addressId: number,
+    ): Promise<WebResponse<boolean>> {
+        const result = await this.addressService.remove(user, contactId, addressId)
+
+        return {
+            data: true
+        }
+    }
 }

@@ -84,4 +84,17 @@ export class AddressService {
 
         return this.toAddressResponse(address)
     }
+
+    async remove(user: User, contactId: number, addressId: number): Promise<AddressResponse> {
+        await this.checkAddressMustExists(addressId, contactId)
+
+        const address = await this.prismaService.address.delete({
+            where: {
+                id: addressId,
+                contact_id: contactId
+            }
+        })
+
+        return this.toAddressResponse(address)
+    } 
 }

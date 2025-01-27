@@ -28,6 +28,8 @@ let app: INestApplication<App>;
   // Register
   describe('POST /api/users', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
       await testService.deleteUser()
     })
 
@@ -76,6 +78,8 @@ let app: INestApplication<App>;
   // Login
   describe('POST /api/users/login', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
     })
@@ -110,6 +114,8 @@ let app: INestApplication<App>;
   // Get User Data
   describe('GET /api/users/current', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
     })
@@ -137,6 +143,8 @@ let app: INestApplication<App>;
   // Update User
   describe('PATCH /api/users/current', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
     })
@@ -191,6 +199,8 @@ let app: INestApplication<App>;
   // Logout
   describe('DELETE /api/users/current', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
+      await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
     })

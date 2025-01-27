@@ -8,7 +8,7 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { TestService } from './test.service';
 import { TestModule } from './test.module';
 
-describe('User Controller', () => {
+describe('Contact Controller', () => {
 let app: INestApplication<App>;
   let logger: Logger
   let testService: TestService
@@ -28,6 +28,7 @@ let app: INestApplication<App>;
   // Create Contact
   describe('POST /api/contacts', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
       await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
@@ -69,6 +70,7 @@ let app: INestApplication<App>;
   // Get Contact
   describe('GET /api/contacts/:contactId', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
       await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
@@ -103,6 +105,7 @@ let app: INestApplication<App>;
   // Update Contact
   describe('PUT /api/contacts/:contactId', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
       await testService.deleteContact()
       await testService.deleteUser()
 
@@ -163,6 +166,7 @@ let app: INestApplication<App>;
   // Delete Contact
   describe('DELETE /api/contacts/:contactId', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
       await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()
@@ -192,6 +196,7 @@ let app: INestApplication<App>;
 
   describe('GET /api/contacts', () => {
     beforeEach(async () => {
+      await testService.deleteAddress()
       await testService.deleteContact()
       await testService.deleteUser()
       await testService.createUser()

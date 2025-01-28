@@ -1,0 +1,123 @@
+POST http://localhost:3000/api/users
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "wildan",
+    "name": "wildan",
+    "password": "rahasia"
+}
+
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "wildan",
+    "password": "rahasia123"
+}
+
+### Get User
+GET http://localhost:3000/api/users/current
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Logout User
+DELETE http://localhost:3000/api/users/current
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Update
+PATCH http://localhost:3000/api/users/current
+Content-Type: application/json
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+{
+    "password": "rahasia123"
+}
+
+### Create Contact
+POST http://localhost:3000/api/contacts
+Content-Type: application/json
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+{
+    "first_name": "Joko",
+    "last_name": "Morro",
+    "email": "joko@example.com",
+    "phone": "082222222"
+}
+
+### Update Contact
+PUT http://localhost:3000/api/contacts/171
+Content-Type: application/json
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+{
+    "first_name": "Budi",
+    "last_name": "Morro",
+    "email": "budi@example.com",
+    "phone": "08999999"
+}
+
+### Get Contact
+GET http://localhost:3000/api/contacts/171
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Delete Contact
+DELETE http://localhost:3000/api/contacts/172
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Search Contact
+GET http://localhost:3000/api/contacts?name=thoriq
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Create Address
+POST http://localhost:3000/api/contacts/171/addresses
+Content-Type: application/json
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+{
+    "street": "Jalan contoh",
+    "city": "Kota contoh",
+    "province": "Provinsi contoh",
+    "country": "Negara contoh",
+    "postal_code": "88815"
+}
+
+### Get Address
+GET http://localhost:3000/api/contacts/171/addresses/81
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### List Address
+GET http://localhost:3000/api/contacts/171/addresses
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+### Update Address
+PUT http://localhost:3000/api/contacts/171/addresses/81
+Content-Type: application/json
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
+
+{
+    "street": "Jalan contoh updated",
+    "city": "Kota contoh updated",
+    "province": "Provinsi contoh",
+    "country": "Negara contoh",
+    "postal_code": "88815"
+}
+
+### Remove Address
+DELETE  http://localhost:3000/api/contacts/171/addresses/82
+Accept: application/json
+Authorization: 20dcfeff-a259-4d70-8e82-d0d28f5799f7
